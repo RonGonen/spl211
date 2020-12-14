@@ -1,0 +1,5 @@
+bgu/spl/mics/application/messages/TestEvent.class
+bgu/spl/mics/application/messages/DeactivationEvent.class
+bgu/spl/mics/application/messages/TestBroadcast.class
+bgu/spl/mics/application/messages/BombDestroyerEvent.class
+bgu/spl/mics/application/services/TestMicroService.class
