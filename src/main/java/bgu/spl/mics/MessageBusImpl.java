@@ -108,4 +108,5 @@ public class MessageBusImpl implements MessageBus {
 	public Message awaitMessage(MicroService m) throws InterruptedException {
 		return mb.get(m).remove();
 	}
+
 }

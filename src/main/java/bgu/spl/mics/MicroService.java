@@ -25,7 +25,7 @@ public abstract class MicroService implements Runnable {
     
     private String name;
     private MessageBusImpl mb = MessageBusImpl.getInstance();
-    private Map<Class<? extends Message>, ArrayList<Callback>> callbackMap;
+    private Map<Class<? extends Message>, Callback> callbackMap;
     /**
      * @param name the micro-service name (used mainly for debugging purposes -
      *             does not have to be unique)
@@ -57,9 +57,8 @@ public abstract class MicroService implements Runnable {
      */
     protected final <T, E extends Event<T>> void subscribeEvent(Class<E> type, Callback<E> callback) {
         if (!callbackMap.containsKey(type)) {
-            callbackMap.put(type, new ArrayList<>());
+            callbackMap.put(type, callback);
         }
-        callbackMap.get(type).add(callback);
     	mb.subscribeEvent(type, this);
     }
 
@@ -85,9 +84,8 @@ public abstract class MicroService implements Runnable {
      */
     protected final <B extends Broadcast> void subscribeBroadcast(Class<B> type, Callback<B> callback) {
         if (!callbackMap.containsKey(type)) {
-            callbackMap.put(type, new ArrayList<>());
+            callbackMap.put(type, callback);
         }
-        callbackMap.get(type).add(callback);
         mb.subscribeBroadcast(type, this);
     }
 
@@ -160,7 +158,7 @@ public abstract class MicroService implements Runnable {
     public final void run() {
         try {
             Message m = mb.awaitMessage(this);
-            this.initialize();
+            callbackMap.get(m).call(m);
         }catch (InterruptedException e){
             run();
             return;

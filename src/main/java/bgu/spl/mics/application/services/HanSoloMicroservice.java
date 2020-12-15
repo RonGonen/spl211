@@ -4,6 +4,7 @@ package bgu.spl.mics.application.services;
 import bgu.spl.mics.Callback;
 import bgu.spl.mics.Event;
 import bgu.spl.mics.MicroService;
+import bgu.spl.mics.application.messages.AttackEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +25,7 @@ public class HanSoloMicroservice extends MicroService {
 
     @Override
     protected void initialize() {
-
+        AttackEvent e;
+//        subscribeEvent(e.getClass(), );
     }
 }
